@@ -1,0 +1,76 @@
+/* Utils */
+.text-center {
+    text-align: center;
+  }
+
+/* styles */
+.App {
+   background-color: var(--main-bg-color);
+   min-height: 100vh;
+   padding: 20px 30px;
+}
+
+.main-title {
+    margin-bottom: 50px;
+}
+
+.canvas_component_box {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.btn_shake_box {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn_shake {
+    background-color: var(--primary-color);
+    border: none; 
+    box-shadow: 0px 10px 8px -7px var(--primary-color);
+    padding: 10px 25px;
+    border-radius: 20px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all .2s ease-in;
+    width: 100%;
+    max-width: 420px;
+}
+
+.btn_shake:hover {
+    background-color:rgba(72,150,216,.85);
+}
+
+.books_list_box {
+    margin-top: 100px;
+}
+
+.books_list {
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 15px;
+}
+
+.book_list_item {
+    border-radius: 8px;
+    background-image: linear-gradient(180deg, #b2eaff 0, #5389f2 50%, #003265 100%);
+    margin-bottom: 8px;
+}
+
+.book_list_item p {
+    color: #ffffff;
+}
+
+@media (min-width:480px) {
+    .books_list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width:768px) {
+    .books_list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
