@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react";
 import { bible_books } from "../utils/helpers";
 import BookBox from "./BookBox";
 import Swal  from "sweetalert2";
