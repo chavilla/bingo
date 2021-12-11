@@ -44,7 +44,12 @@
 }
 
 .books_list_box {
-    margin-top: 100px;
+    margin-top: 50px;
+}
+
+.books_list_box h2 {
+    margin-bottom: 40px;
+    font-weight: 400;
 }
 
 .books_list {
