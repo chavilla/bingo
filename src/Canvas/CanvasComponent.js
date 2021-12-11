@@ -76,11 +76,25 @@ const CanvasComponent = () => {
   };
 
   const restartGame = () => {
-    setBooksCanvas([]);
-    localStorage.removeItem("books");
-    localStorage.removeItem("books_bible_storaged");
-    books_storaged_state = [];
-    books_bible_pending = bible_books;
+
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "No puedes revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: "No",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setBooksCanvas([]);
+        localStorage.removeItem("books");
+        localStorage.removeItem("books_bible_storaged");
+        books_storaged_state = [];
+        books_bible_pending = bible_books;
+      }
+    })
   }
 
   return (
