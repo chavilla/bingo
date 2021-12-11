@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { bible_books } from "../utils/helpers";
 import BookBox from "./BookBox";
-import Swal  from "sweetalert2";
+import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUndo, faBook } from "@fortawesome/free-solid-svg-icons";
 let books_storaged_state = [];
 let books_bible_pending = bible_books;
 
@@ -41,7 +43,7 @@ const CanvasComponent = () => {
     }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
-        getRandomArbitrary(min,max)
+        getRandomArbitrary(min, max);
       }
     });
   };
@@ -71,22 +73,43 @@ const CanvasComponent = () => {
     }
 
     Swal.fire(`Libro seleccionado: \n ${selected_book}`);
-
   };
+
+  const restartGame = () => {
+    setBooksCanvas([]);
+    localStorage.removeItem("books");
+    localStorage.removeItem("books_bible_storaged");
+    books_storaged_state = [];
+    books_bible_pending = bible_books;
+  }
 
   return (
     <div className="canvas_component_box">
       <div className="btn_shake_box">
+        <button className="btn_restart" onClick={ () => restartGame() }>
+          Reiniciar
+          <FontAwesomeIcon
+            style={{
+              marginLeft: "10px",
+            }}
+            icon={faUndo}
+          />
+        </button>
         <button
           type="button"
           className="btn_shake"
           disabled={finished}
-          onClick={() => showSweetAlert(0, books_bible_pending.length) }
+          onClick={() => showSweetAlert(0, books_bible_pending.length)}
         >
-          Elegir libro
+          {finished ? "Juego terminado" : "Seleccionar libro"}
+          <FontAwesomeIcon
+            style={{
+              marginLeft: "10px",
+            }}
+            icon={faBook}
+          />
         </button>
       </div>
-      {finished && <p className="text-center">Juego terminado</p>}
       <div className="books_list_box">
         <h2 className="text-center">
           Libros generados {booksCanvas.length}/66{" "}
