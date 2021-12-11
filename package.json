@@ -1,6 +1,6 @@
 {
-  "name": "bingo",
   "homepage": "https://chavilla.github.io/bingo",
+  "name": "bingo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
