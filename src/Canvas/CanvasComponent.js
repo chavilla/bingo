@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { bible_books } from "../utils/helpers";
+import { bible_books, bible_books2 } from "../utils/helpers";
 import BookBox from "./BookBox";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -92,7 +92,7 @@ const CanvasComponent = () => {
         localStorage.removeItem("books");
         localStorage.removeItem("books_bible_storaged");
         books_storaged_state = [];
-        books_bible_pending = bible_books;
+        books_bible_pending = bible_books2;
       }
     })
   }
