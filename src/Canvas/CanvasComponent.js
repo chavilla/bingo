@@ -5,10 +5,12 @@ import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo, faBook } from "@fortawesome/free-solid-svg-icons";
 let books_storaged_state = [];
-let books_bible_pending = bible_books;
+/* let books_bible_pending = bible_books; */
 
 const CanvasComponent = () => {
   const [finished, setFinished] = useState(false);
+  const [restarted, setRestarted] = useState(false);
+  const [booksBiblePending, setBooksBiblePending] = useState(bible_books)
   const [booksCanvas, setBooksCanvas] = useState([]);
 
   useEffect(() => {
@@ -18,10 +20,21 @@ const CanvasComponent = () => {
       JSON.parse(localStorage.getItem("books_bible_storaged")) || null;
     if (get_books_storaged) {
       setBooksCanvas(get_books_storaged);
+      setBooksBiblePending(books_storaged_pending)
       books_storaged_state = get_books_storaged;
-      books_bible_pending = books_storaged_pending;
     }
   }, []);
+
+  useEffect(()=>{
+    if (restarted) {
+      localStorage.removeItem('books');
+      localStorage.removeItem('books_bible_storaged');
+      books_storaged_state = [];
+      setBooksCanvas([]);
+      setBooksBiblePending(bible_books);
+      setRestarted(false);
+    }
+  }, [restarted]);
 
   const showSweetAlert = (min, max) => {
     let timerInterval;
@@ -53,22 +66,26 @@ const CanvasComponent = () => {
     const random_code = Math.floor(Math.random() * (max - min)) + min;
 
     // 02. Select a book from the array
-    const selected_book = books_bible_pending[random_code];
+    const selected_book = booksBiblePending[random_code];
 
     // 03. delete the element from the bible books array
-    books_bible_pending.splice(random_code, 1);
+   let item_pending_to_delete = booksBiblePending;
+   item_pending_to_delete.splice(random_code, 1);
+
+   console.log("Item delete ", item_pending_to_delete);
 
     //04. set the book selected in a row to render
     setBooksCanvas([...booksCanvas, selected_book]);
+    setBooksBiblePending([...booksBiblePending], item_pending_to_delete);
     books_storaged_state.push(selected_book);
     localStorage.setItem("books", JSON.stringify(books_storaged_state));
     localStorage.setItem(
       "books_bible_storaged",
-      JSON.stringify(books_bible_pending)
+      JSON.stringify(item_pending_to_delete)
     );
 
     // 05. conditional to finish the game
-    if (books_bible_pending.length === 0) {
+    if (booksBiblePending.length === 0) {
       setFinished(true);
     }
 
@@ -88,11 +105,7 @@ const CanvasComponent = () => {
       confirmButtonText: 'Sí'
     }).then((result) => {
       if (result.isConfirmed) {
-        setBooksCanvas([]);
-        localStorage.removeItem("books");
-        localStorage.removeItem("books_bible_storaged");
-        books_storaged_state = [];
-        books_bible_pending = bible_books;
+        setRestarted(true);
       }
     })
   }
@@ -113,7 +126,7 @@ const CanvasComponent = () => {
           type="button"
           className="btn_shake"
           disabled={finished}
-          onClick={() => showSweetAlert(0, books_bible_pending.length)}
+          onClick={() => showSweetAlert(0, booksBiblePending.length)}
         >
           {finished ? "Juego terminado" : "Seleccionar libro"}
           <FontAwesomeIcon
