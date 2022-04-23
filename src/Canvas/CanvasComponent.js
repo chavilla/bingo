@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { bible_books } from "../utils/helpers";
+import { bible_books, bible_books2 } from "../utils/helpers";
 import BookBox from "./BookBox";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo, faBook } from "@fortawesome/free-solid-svg-icons";
 let books_storaged_state = [];
-/* let books_bible_pending = bible_books; */
 
 const CanvasComponent = () => {
   const [finished, setFinished] = useState(false);
@@ -14,6 +13,7 @@ const CanvasComponent = () => {
   const [booksCanvas, setBooksCanvas] = useState([]);
 
   useEffect(() => {
+
     const get_books_storaged =
       JSON.parse(localStorage.getItem("books")) || null;
     const books_storaged_pending =
@@ -31,10 +31,10 @@ const CanvasComponent = () => {
       localStorage.removeItem('books_bible_storaged');
       books_storaged_state = [];
       setBooksCanvas([]);
-      setBooksBiblePending(bible_books);
+      setBooksBiblePending(bible_books2);
       setRestarted(false);
     }
-  }, [restarted]);
+  }, [restarted, setRestarted]);
 
   const showSweetAlert = (min, max) => {
     let timerInterval;
@@ -71,8 +71,6 @@ const CanvasComponent = () => {
     // 03. delete the element from the bible books array
    let item_pending_to_delete = booksBiblePending;
    item_pending_to_delete.splice(random_code, 1);
-
-   console.log("Item delete ", item_pending_to_delete);
 
     //04. set the book selected in a row to render
     setBooksCanvas([...booksCanvas, selected_book]);
